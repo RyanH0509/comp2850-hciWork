@@ -1,101 +1,46 @@
-# Informed Consent Script (Task 1)
+# Consent Script (Verbal) — Task 1 Pilots
 
-**Study title**: Usability & Accessibility Evaluation of [YOUR WEBSITE / APP NAME]  
-**Researcher**: [Your name], COMP2850 (HCI)  
-**Date**: [YYYY-MM-DD]  
-**Session type**: [In-person / Remote]  
-**Consent type**: [Verbal consent recorded in notes / Written consent (signed)]
+Use this as a short, consistent script. You can paraphrase, but keep the meaning the same.
 
 ---
 
-## 1) Introduction (Read or show to participant)
+## Quick setup (for the facilitator)
 
-Hi, thanks for taking part.  
-I’m evaluating my course project website, [YOUR WEBSITE / APP NAME], to understand how well it supports different people and interaction styles (mouse, keyboard-only, screen reader, and no-JS use).
-
-This session will take about **[10–20] minutes**.
-
-Participation is **voluntary**. You can stop at any time, skip any task or question, and you don’t need to give a reason.
+- Participant label: **P#** (no real names)
+- Session code (sid): **P#_xxxx**
+- Mode: **JS-on (HTMX)** or **JS-off (No-JS)**
+- No audio/video recording
 
 ---
 
-## 2) What you will do
+## Read-aloud script
 
-You will be asked to complete a small set of realistic tasks on my website, such as:
+Hi — thanks for helping with a short pilot of our task manager prototype. This session will take about **15–20 minutes**.
 
-- **T1**: [e.g., Find / filter / navigate to ...]
-- **T2**: [e.g., Edit / update ...]
-- **T3**: [e.g., Create / submit ...]
-- **T4**: [e.g., Delete / confirm ...]
-(Tasks may be done with [mouse / keyboard / screen reader / no-JS], depending on the pilot setup.)
+I’ll ask you to try **four small tasks**. While you work, I’ll time each task and write down what happens.  
+**This is a test of the interface, not a test of you** — there are no right or wrong answers.
 
-I’m testing the design, not you. If something is confusing or frustrating, that’s useful feedback.
+### What we will record
+- Time taken per task
+- Whether you completed the task
+- Errors (e.g., submitting an empty title)
+- A quick confidence rating after each task (1–5)
+- My written observations, and short quotes if you’re comfortable
 
----
+### What we will NOT record
+- Your name, email, student ID, or anything that identifies you
+- Any audio or video recordings
 
-## 3) What data I will collect
+Your data will be linked only to an anonymous session code: **`[SESSION_ID]`**.
 
-During the tasks I will collect:
+Participation is voluntary. You can stop at any time or skip any task/question, with no penalty.  
+If you later want your data removed, tell me your session code and I will delete the matching notes/log entries.
 
-### Quantitative (metrics)
-- Task completion (completed / not completed)
-- Time on task
-- Error count (e.g., wrong clicks, validation failures)
-- Optional: number of hints needed
+Do you have any questions?
 
-### Qualitative
-- Observations and quotes (what you say / what I notice)
-
-### Recording (choose one)
-- [ ] **No recording** (notes only)
-- [ ] **Screen recording** (screen only)
-- [ ] **Audio recording** (voice only)
-- [ ] **Screen + audio recording**
-
-If recording is enabled, you can ask me to pause or stop recording at any point.
+**Do you consent to continue?** (Wait for a clear “yes”.)
 
 ---
 
-## 4) Privacy, anonymity, and storage
-
-- I will **not** collect real names, emails, phone numbers, or other identifying information.
-- In my notes and CSV files, you will be referenced only as **P1 / P2 / P3 / P4** (participant ID).
-- Any metrics exported (e.g., `metrics.csv`) will be anonymised (no real names/emails).  
-- Data is used only for this coursework submission and will be stored in my private course repository / local drive.
-
----
-
-## 5) Risks and benefits
-
-Risks are minimal, but you might feel mild frustration if something is hard to use. You may take a break or stop at any time.
-
-There is no direct benefit to you, but your feedback helps improve the design and accessibility of the project.
-
----
-
-## 6) Questions
-
-Do you have any questions before we start?
-
----
-
-## 7) Consent confirmation
-
-### Option A — Verbal consent (recommended for peer pilots)
-Please answer “Yes” or “No”:
-
-1. I understand what this study involves and I have had the chance to ask questions.  **Yes / No**
-2. I understand participation is voluntary and I can stop at any time. **Yes / No**
-3. I agree to take part in the tasks. **Yes / No**
-4. Recording choice (if any): [No / Screen / Audio / Screen+Audio]. **Yes / No**
-
-**Researcher note**: Record in pilot notes: “Consent obtained verbally at [HH:MM]. Recording: [X].”
-
-### Option B — Written consent (if you use a signed form)
-Participant name (optional): __________________  
-Signature: __________________  Date: __________  
-Researcher signature: __________________  Date: __________
-
----
-
-**Start session only after consent is confirmed.**
+## If they say “no”
+No problem — thank you for your time.

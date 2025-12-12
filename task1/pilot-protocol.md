@@ -1,100 +1,131 @@
-# Pilot Protocol (Task 1) — Ktor + Pebble + HTMX Task Manager
+# Pilot Protocol — Task 1 (Peer Pilots)
 
-## 1) Purpose
-Evaluate usability + accessibility of a server-rendered task manager with progressive enhancement:
-- JS-on: HTMX partial updates
-- No-JS: full-page fallback routes (PRG redirects)
+This protocol is designed to keep each pilot consistent while still feeling natural.
 
-Primary measures: completion, time, errors, hints, and perceived clarity of feedback.
+**Participants**: 3–5  
+**Target time**: ~15 minutes per participant  
+**Modes**:
+- P1/P3/P5 → **JS-on (HTMX)**
+- P2/P4 → **JS-off (No-JS)**
 
-## 2) Participants & Conditions (n=4)
-- P1: Mouse + JS-on (HTMX)
-- P2: Keyboard-only + JS-on (HTMX)
-- P3: Mouse + No-JS (Disable JS + hard refresh)
-- P4: Keyboard-only + No-JS (Disable JS + hard refresh)
+---
 
-## 3) Materials & Setup
-- Start page (full page): GET /tasks
-- HTMX list fragment: GET /tasks/fragment
-- Add: POST /tasks
-- Edit (open): GET /tasks/{id}/edit
-- Edit (submit): POST /tasks/{id}/edit
-- Delete (HTMX): DELETE /tasks/{id}
-- Delete (no-JS fallback): POST /tasks/{id}/delete
-- Delete confirm page (no-JS): GET /tasks/{id}/delete/confirm
+## 1) Before the first pilot (5 minutes)
 
-Browser/OS: [填写]
-Prototype URL: http://localhost:8080
+- Start the server and open `/tasks`
+- Confirm the four flows work: add, filter, edit, delete
+- Confirm event logging is enabled (`data/metrics.csv` receives new rows)
+- Prepare a notes file: `pilot-notes/Px_notes.md`
+- Have a timer ready (metrics are the backup, not the only source of timing)
 
-### Data reset (before each participant)
-Reset dataset so every pilot starts from the same baseline:
-- Ensure at least one task for: search/filter, edit, delete, and optionally enough items to paginate.
-- Clear metrics file if you want a clean dataset for this pilot run.
+---
 
-## 4) Moderator script (before tasks)
-1) Read consent-script.md; obtain **verbal consent**.
-2) Say: “I’m testing the website, not you. Please tell me what you expect to happen.”
-3) Confirm condition:
-   - JS-on: normal browsing (HTMX active)
-   - No-JS: disable JS in DevTools + hard refresh
-4) Navigate to /tasks and begin.
+## 2) Per-participant flow (≈15–20 minutes)
 
-## 5) Tasks (T1–T4) + success criteria + what to record
+### 2.1 Consent (2 min)
+- Run `consent-script.md`
+- Record: participant label (P#), mode (JS-on/JS-off), session code (sid)
+
+### 2.2 Configure the session (1–2 min)
+- Set sid cookie: `sid=P#_xxxx`
+- If JS-off: disable JavaScript in the browser
+
+### 2.3 Warm-up (1–2 min, not timed)
+Prompt:
+> “Please take a moment to look around the page. Let me know when you’re ready to start the first task.”
+
+### 2.4 Run the tasks (timed)
 For each task:
-- Start timer when participant begins acting
-- Stop timer when success criteria met OR participant gives up
-- Record: completion (Y/N), time_s, errors, hints_used, notable quotes
+1) Read the scenario  
+2) Start timing when they begin acting  
+3) Observe silently (no coaching)  
+4) Stop timing on success or when they give up  
+5) Ask: “**From 1–5, how confident are you that you completed that correctly?**”  
+6) Record any errors + notable quotes
 
-### T1 — Filter/Search tasks (task_code will log as T1_filter)
-**Start**: /tasks
-**Instruction**:
-- “Use the search/filter box to find the task titled ‘[基线任务名A]’.”
-- If results update dynamically (HTMX), continue; if no-JS, submit and wait full reload.
-**Success**:
-- The filtered list shows the target task (or “no results” is clearly communicated).
-**What it tests**:
-- GET /tasks?q=... and/or GET /tasks/fragment?q=...
+**If they are stuck**: wait ~3 minutes, then ask what they’re trying to do. If still stuck, end the task and move on. Record it as a failure and note why.
 
-### T2 — Add a task (task_code logs as T3_add)
-**Start**: /tasks
-**Instruction**:
-- “Add a new task titled ‘Book dentist appointment’ (priority optional if available).”
-**Success**:
-- The new task appears in the list and feedback is perceivable.
-**Important constraint**:
-- Title cannot be blank and is limited in length (validation exists). :contentReference[oaicite:0]{index=0}
+### 2.5 Debrief (2–3 min)
+Ask:
+- “Which task felt hardest?”
+- “Was anything unclear or unexpected?”
+- “At any point, were you unsure whether something worked?”
+- “Any accessibility issues (keyboard, focus, no-JS)?”
 
-### T3 — Edit a task (task_code logs as T4_edit)
-**Start**: /tasks
-**Instruction**:
-- “Edit the task ‘[基线任务名A]’ and change it to ‘[基线任务名A - 修改版]’. Save.”
-**Success**:
-- Updated title appears and persists after refresh.
-**What it tests**:
-- GET /tasks/{id}/edit (HTMX partial vs no-JS full page)
-- POST /tasks/{id}/edit (handles validation_error vs success)
+---
 
-### T4 — Delete with safe confirmation in no-JS (task_code logs as T3_delete)
-**Start**: /tasks
-**Instruction**:
-- “Delete the task ‘Book dentist appointment’.”
-- If no-JS and you land on a confirmation page, confirm deletion.
-**Success**:
-- Task is removed from list; user understands what happened.
-**What it tests**:
-- JS-on: DELETE /tasks/{id}
-- No-JS: GET /tasks/{id}/delete/confirm then POST /tasks/{id}/delete
+## 3) Task scenarios (read aloud)
 
-## 6) Hinting rules (consistency)
-- If stuck > 30 seconds: “What would you try next?”
-- Then 1 neutral hint: “Look near the task row for Edit/Delete.”
-- Max 2 hints per task; record hint count.
+> Suggested order: Add → Filter → Edit → Delete (then debrief)
 
-## 7) Post-test questions (2–3 min)
-1) “What was the most confusing moment?”
-2) “Was it clear when actions succeeded/failed?”
-3) “In no-JS mode, did anything feel missing or harder?”
+### T1 — Add a task (≤60s)
+“You need to remember to **Call supplier about delivery**. Add this as a new task.”
 
-## 8) Data recording (what files will be produced)
-- metrics.csv: exported from system logs (anonymised)
-- pilot notes: one file per participant (P1–P4) with timestamps + quotes
+What to watch for:
+- Do they notice the confirmation/status message?
+- Do they accidentally submit an empty title?
+
+### T2 — Filter tasks (≤120s)
+“Filter the list to show tasks containing **report**, then tell me how many remain.”
+
+What to watch for:
+- Can they find the filter quickly?
+- Do they rely on the UI’s count/status, or manually count?
+
+### T3 — Edit a task (≤90s)
+“Edit **Submit invoices** to **Submit invoices by Friday** and save.”
+
+What to watch for:
+- Do they find the edit control?
+- If they trigger an error (blank title), is recovery obvious?
+
+### T4 — Delete a task (≤45s)
+“Delete the task named **Test entry**.”
+
+What to watch for:
+- Do they expect a confirmation step?
+- After deletion, do they feel confident it worked?
+
+---
+
+## 4) Notes template (copy into each participant file)
+
+```markdown
+# Pilot Notes — P1
+
+Mode: JS-on (HTMX) / JS-off (No-JS)  
+Session code (sid): P1_7a9f  
+Date/time: YYYY-MM-DD HH:MM  
+Consent: yes
+
+## T3 Add
+Time: __s | Success: Y/N | Errors: __ | Confidence: __/5
+Notes/quotes:
+
+## T1 Filter
+Time: __s | Success: Y/N | Errors: __ | Confidence: __/5
+Notes/quotes:
+
+## T2 Edit
+Time: __s | Success: Y/N | Errors: __ | Confidence: __/5
+Notes/quotes:
+
+## T4 Delete
+Time: __s | Success: Y/N | Errors: __ | Confidence: __/5
+Notes/quotes:
+
+## Debrief
+Hardest task:
+Unclear moments:
+Accessibility notes:
+Quotes:
+```
+
+---
+
+## 5) Between pilots (3–5 minutes)
+
+- Save the notes file
+- Quick sanity check: `data/metrics.csv` has rows for that sid
+- Clear cookies / generate a new sid for the next participant
+- Swap roles (if working in a pair)
