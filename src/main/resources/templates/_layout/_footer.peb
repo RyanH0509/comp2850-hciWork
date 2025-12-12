@@ -1,0 +1,16 @@
+<footer>
+    <p>
+        <small>
+            COMP2850 HCI &bull; Server-first architecture &bull;
+            <a href="https://htmx.org/docs/" target="_blank" rel="noopener">HTMX Docs</a> &bull;
+            <a href="https://www.w3.org/WAI/WCAG22/quickref/" target="_blank" rel="noopener">WCAG 2.2</a> &bull;
+            <a href="/about">About</a>
+        </small>
+    </p>
+    <p>
+        <small>
+            Session: {{ sessionId }} &bull;
+            Mode: {% if isHtmx %}HTMX{% else %}No-JS{% endif %}
+        </small>
+    </p>
+</footer>

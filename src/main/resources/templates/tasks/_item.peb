@@ -1,0 +1,33 @@
+<li id="task-{{ task.id }}">
+    <article>
+        <header>
+            <strong>{{ task.title }}</strong>
+            {% if task.priority %}
+                <small>({{ task.priority }})</small>
+            {% endif %}
+        </header>
+
+        <div class="grid">
+        <a
+            href="/tasks/{{ task.id }}/edit"
+            role="button"
+            class="outline"
+            hx-get="/tasks/{{ task.id }}/edit"
+            hx-target="#task-{{ task.id }}"
+            hx-swap="outerHTML">
+            Edit
+        </a>
+
+        <a
+            href="/tasks/{{ task.id }}/delete/confirm"
+            role="button"
+            class="outline"
+            hx-delete="/tasks/{{ task.id }}"
+            hx-confirm="Are you sure you want to delete '{{ task.title }}'?"
+            hx-target="#task-{{ task.id }}"
+            hx-swap="delete">
+            Delete
+        </a>
+    </div>
+    </article>
+</li>

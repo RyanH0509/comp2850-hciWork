@@ -6,13 +6,13 @@ import io.ktor.server.routing.*
 import io.ktor.server.http.content.*
 import io.ktor.server.plugins.callloging.*
 import io.ktor.server.request.*
-import io.ktor.server.response.*
 import io.pebbletemplates.pebble.PebbleEngine
-import routes.taskRoutes
-import routes.configureHealthCheck
+import io.pebbletemplates.pebble.loader.ClasspathLoader
+import routes.configureTaskRoutes
 import utils.SessionData
 import java.io.StringWriter
-import io.ktor.util.*
+import io.ktor.util.AttributeKey
+import storage.TaskStore
 
 /**
  * NOTE FOR NON-INTELLIJ IDEs (VSCode, Eclipse, etc.):
@@ -93,31 +93,40 @@ fun Application.configureLogging() {
  * - Full pages in root or feature subdirectories
  */
 fun Application.configureTemplating() {
-    val pebbleEngine =
-        PebbleEngine
-            .Builder()
-            .loader(
-                io.pebbletemplates.pebble.loader.ClasspathLoader().apply {
-                    prefix = "templates/"
-                },
-            ).autoEscaping(true) // XSS protection via auto-escaping
-            .cacheActive(false) // Disable cache in dev for hot reload
-            .strictVariables(false) // Allow undefined variables (fail gracefully)
-            .build()
+//    val pebbleEngine =
+//        PebbleEngine
+//            .Builder()
+//            .loader(
+//                io.pebbletemplates.pebble.loader.ClasspathLoader().apply {
+//                    prefix = "templates/"
+//                },
+//            ).autoEscaping(true) // XSS protection via auto-escaping
+//            .cacheActive(false) // Disable cache in dev for hot reload
+//            .strictVariables(false) // Allow undefined variables (fail gracefully)
+//            .build()
+//
+//    environment.monitor.subscribe(ApplicationStarted) {
+//        log.info("✓ Pebble templates loaded from resources/templates/")
+//        log.info("✓ Server running on configured port")
+//    }
+//
+//    // Make Pebble available to all routes
+//    attributes.put(PebbleEngineKey, pebbleEngine)
+    val engine = PebbleEngine.Builder()
+        .loader(ClasspathLoader().apply { prefix = "templates/" })
+        .build()
 
-    environment.monitor.subscribe(ApplicationStarted) {
-        log.info("✓ Pebble templates loaded from resources/templates/")
-        log.info("✓ Server running on configured port")
-    }
-
-    // Make Pebble available to all routes
-    attributes.put(PebbleEngineKey, pebbleEngine)
+    // Store in attributes so renderTemplate() can access it
+    attributes.put(PebbleEngineKey, engine)
 }
+
+
 
 /**
  * AttributeKey for storing Pebble engine instance.
  */
 val PebbleEngineKey = AttributeKey<PebbleEngine>("PebbleEngine")
+
 
 /**
  * Render a Pebble template to HTML string.
@@ -206,15 +215,10 @@ fun Application.configureSessions() {
  * - Task CRUD: `/tasks`, `/tasks/{id}`, etc.
  */
 fun Application.configureRouting() {
+    val store = TaskStore()
     routing {
-        // Static files (CSS, JS, HTMX library)
         staticResources("/static", "static")
 
-        // Health check endpoint (for monitoring)
-        configureHealthCheck()
-
-        // Task management routes (main feature)
-        // TODO: Week 6 Lab 1 - Implement taskRoutes()
-        taskRoutes()
+        configureTaskRoutes(store)
     }
 }

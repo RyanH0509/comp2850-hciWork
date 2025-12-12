@@ -1,0 +1,7 @@
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<div id="status" role="status" aria-live="polite" aria-atomic="true"></div>
+
+<header>
+    {% include "_layout/_nav.peb" %}
+</header>

@@ -1,0 +1,9 @@
+<nav aria-label="Main navigation">
+    <ul>
+        <li><strong>COMP2850 Task Manager</strong></li>
+    </ul>
+    <ul>
+        <li><a href="/tasks">Tasks</a></li>
+        <li><a href="/health">Health</a></li>
+    </ul>
+</nav>

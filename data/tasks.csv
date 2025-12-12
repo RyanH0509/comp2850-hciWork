@@ -1,3 +1,3 @@
-id,title
-2,Test Task
-3,Kotlin 2.2.21 works
+id,title,priority,completed
+1325a680-d8d1-4f72-9d61-840fccc74381,buy hamburger,,false
+dac713ad-6ee4-4bc1-939f-05c7587e9234,go to school,,false

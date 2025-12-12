@@ -1,0 +1,36 @@
+<li id="task-{{ task.id }}">
+    <form action="/tasks/{{ task.id }}/edit"
+          method="post"
+          style="margin-bottom: 0;"
+          hx-post="/tasks/{{ task.id }}/edit"
+          hx-target="#task-{{ task.id }}"
+          hx-swap="outerHTML">
+
+        <article>
+            <input type="text"
+                   name="title"
+                   value="{{ task.title }}"
+                   aria-invalid="{{ error != null }}"
+                   required>
+
+            {% if error %}
+            <small style="color: #c62828;">{{ error }}</small>
+            {% endif %}
+
+            <div class="grid">
+                <button type="submit" class="outline">Save</button>
+
+                <button
+                   type="submit"
+                   class="outline"
+                   formaction="/tasks"
+                   formmethod="get"
+                   hx-get="/tasks/{{ task.id }}/view"
+                   hx-target="#task-{{ task.id }}"
+                   hx-swap="outerHTML push-url:false">
+                   Cancel (discard changes)
+                </button>
+            </div>
+        </article>
+    </form>
+</li>
